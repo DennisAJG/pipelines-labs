@@ -4,8 +4,6 @@ on: # Definição onde o workflow será executado
   push:
     branches: 
       - main
-      - 'release/**'
-      - '!feature/experimental'
     paths:
       - 'src/**'
       - 'package*.json'
