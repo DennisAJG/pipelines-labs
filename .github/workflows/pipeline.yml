@@ -2,10 +2,13 @@ name: "Estrutura de Diretorios e Arquivos"
 
 on: # Definição onde o workflow será executado
   push:
-    branches: [main]
+    branches: 
+      - main
+      - 'release/**'
+      - '!feature/experimental'
     paths:
       - 'src/**'
-      - '!src/tests/**'
+      - 'package*.json'
     paths-ignore:
       - 'docs/**'
       - '**.md'
