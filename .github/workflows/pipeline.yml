@@ -3,6 +3,9 @@ name: "Estrutura de Diretorios e Arquivos"
 on: # Definição onde o workflow será executado
   push:
     branches: [main]
+    paths:
+      - 'src/**'
+      - '!src/tests/**'
   workflow_dispatch: # Disparo apenas na interface web 
 
 env:
