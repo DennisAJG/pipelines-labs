@@ -6,6 +6,9 @@ on: # Definição onde o workflow será executado
     paths:
       - 'src/**'
       - '!src/tests/**'
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
   workflow_dispatch: # Disparo apenas na interface web 
 
 env:
