@@ -1,0 +1,31 @@
+name: Push Trigger Workflow
+
+### Executa apenas em push 
+on:
+  push:
+    branches: 
+      - develop
+    paths: # Só vai disparar o gatilho se houver mudanças nesses
+      - 'src/**' 
+      - 'README.md'
+
+jobs:
+  push-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout código 
+        uses: actions/checkout@v4
+      
+      - name: Informações do Push
+        run: |
+          echo "Workflow disparado por PUSH"
+          echo "Commit: ${{ github.sha }}"
+          echo "Autor: ${{ github.actor }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Repositórios: ${{ github.repository }}"
+
+      - name: Listar arquivos modificados
+        run: |
+          echo "Arquivos no Repositório"
+          ls -la src/
