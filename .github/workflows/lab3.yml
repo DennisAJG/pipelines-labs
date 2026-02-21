@@ -28,4 +28,4 @@ jobs:
       - name: Listar arquivos modificados
         run: |
           echo "Arquivos no Repositório"
-          ls -la
+          ls -la src/
