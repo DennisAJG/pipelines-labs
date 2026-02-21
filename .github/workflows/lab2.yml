@@ -26,4 +26,4 @@ jobs:
           echo "==========================="
           echo "Total de commits: $(git rev-list --all --count)"
           echo "Contribuidores únicos: $(git shortlog -sn | wc -l)"
-          echo "último commit: $(git log -l --pretty=format: '%h -%s (%an, %ar)')"
+          echo "último commit: $(git log -1 --pretty=format: '%h -%s (%an, %ar)')"
