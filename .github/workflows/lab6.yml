@@ -1,0 +1,68 @@
+name: Matrix Strategy 
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+    
+jobs:
+  # Job com matrix para multiplos ambientes 
+  test-matrix:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false # Não para se um job falhar
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest] # Amb
+        node-version: [16, 18, 20] # Versões do Node.js
+        include:
+          - os: ubuntu-latest
+            node-version: 18
+            experimental: true # Variável de ambiente para teste experimental
+        exclude:
+          - os: windows-latest
+            node-version: 16 # Exclui essa combinação
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Informações da matrix
+      run: |
+        echo "OS: ${{ matrix.os }}"
+        echo "Node.js version: ${{ matrix.node-version }}"
+        echo "Experimental: ${{ matrix.experimental }}"
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+      
+    - name: Verificar versões
+      run: |
+        echo  "Node version: $(node -v)"
+        echo  "NPM version: $(npm -v)"
+
+    - name: Executar testes especificos do OS
+      run: |
+        echo "Executando testes no ${{ matrix.os }} com Node ${{ matrix.node-version }}..."
+        sleep 2
+        echo "Testes cincluidos"
+
+    - name: Teste experimental
+      if: matrix.experimental == 'true' # Executa apenas para a combinação experimental
+      run: |
+        echo "Executando testes experimentais no ${{ matrix.os }} com Node ${{ matrix.node-version }}..."
+        sleep 2
+        echo "Testes experimentais concluídos"
+
+  # Job para coletar resultados após a execução da matrix
+  collect-results:
+    runs-on: ubuntu-latest
+    needs: test-matrix
+
+    steps:
+    - name: Coletar resultados
+      run: |
+        echo "Coletando resultados dos testes..."
+        sleep 2
+        echo "Resultados coletados"
