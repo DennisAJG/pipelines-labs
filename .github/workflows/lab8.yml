@@ -1,0 +1,68 @@
+name: Demonstração Variaveis de Ambiente e Condicionais
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Variaveis de ambiente no nivel de WORKFLOW
+
+env:
+  WORKFLOW_VAR: "Ambiente do Workflow"
+  AMBIENTE: "Desenvolvimento"
+  VERSAO_APP: "1.0.0"
+
+jobs:
+  demonstracao-varaiveis:
+    runs-on: ubuntu-latest
+    
+    # Variaveis de ambiente no nivel de JOB
+    env:
+      JOB_VAR: "Ambiente do Job"
+      USUARIO: "Dennis"
+
+    steps:
+      - name: Exibir variáveis do workflow
+        run: |
+          echo "=== Variáveis do Workflow ==="
+          echo "Variável WORKFLOW_VAR: ${{ env.WORKFLOW_VAR }}"
+          echo "Ambiente: ${{ env.AMBIENTE }}"
+          echo "Versão da aplicação: ${{ env.VERSAO_APP }}"
+
+      - name: Exibir variáveis do job
+        run: |
+          echo "=== Variáveis do Job ==="
+          echo "Variável JOB_VAR: ${{ env.JOB_VAR }}"
+          echo "Usuário: ${{ env.USUARIO }}"
+
+      - name: Exibir variável do step
+        env:
+          STEP_VAR: "Variável definida no nível do step"
+          MENSAGEM: "Este é um exemplo prático!"
+        run: |
+          echo "=== Variáveis do Step ==="
+          echo "Variável STEP_VAR: ${{ env.STEP_VAR }}"
+          echo "Mensagem: ${{ env.MENSAGEM }}"
+
+      - name: Combinar variáveis de diferentes níveis
+        env:
+          STEP_ESPECIFICO: "step-value"
+        run: |
+          echo "=== Combinação de Variáveis ==="
+          echo "Workflow: ${{ env.WORKFLOW_VAR }}"
+          echo "Job: ${{ env.JOB_VAR }}"
+          echo "Step: ${{ env.STEP_ESPECIFICO }}"
+          echo "Todas acessíveis no mesmo contexto!"
+
+      - name: Usar variáveis em comandos práticos
+        env:
+          NOME_PROJETO: "lab-variaveis"
+          TIMESTAMP: "2025-01-13"
+        run: |
+          echo "=== Exemplo Prático ==="
+          echo "Compilando projeto: ${{ env.NOME_PROJETO }}"
+          echo "Data de build: ${{ env.TIMESTAMP }}"
+          echo "Ambiente de deploy: ${{ env.AMBIENTE }}"
+          echo "Versão: ${{ env.VERSAO_APP }}"
+    
